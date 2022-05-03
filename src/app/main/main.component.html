@@ -1,0 +1,28 @@
+<app-header (OpenEvent)="drawer.toggle()" ></app-header>
+<mat-drawer-container class="container" [hasBackdrop]="hasBackdrop">
+    <mat-drawer #drawer>
+            <div class="conc-button">
+              <button mat-button class="button" (click)="affichage(0);drawer.close()">P0</button>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="conc-button">
+              <button mat-button class="button" (click)="affichage(1);drawer.close()">P1</button>
+            </div>
+          <mat-divider></mat-divider>
+          <div class="conc-button">
+            <button mat-button class="button"  (click)="affichage(2);drawer.close()">P2</button>
+          </div>
+        <mat-divider></mat-divider>
+        <div class="conc-button">
+          <button mat-button class="button"  (click)="affichage(3);drawer.close()">P3</button>
+        </div>
+      <mat-divider></mat-divider>
+    </mat-drawer>
+    <mat-drawer-content>
+      <div *ngIf="section === 0" class="section"> 
+        <button mat-button class="button"  (click)="voir()">OKOK</button>
+      </div>
+      <div *ngIf="section === 1" class="section">ici section 1</div>
+      <div *ngIf="section === 2" class="section">ici section 2</div>
+    </mat-drawer-content>
+</mat-drawer-container>

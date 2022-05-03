@@ -1,0 +1,37 @@
+.example-spacer {
+    flex: 1 1 auto;
+  }
+
+.button {
+    background-color: rgb(33, 33, 33);
+    border: 0;
+    padding: 5px 9px 0 9px;
+    transition-duration: 0.4s;
+}
+      
+.button:hover {
+background-color: rgb(50, 50, 50); 
+color: white;
+}
+.button:active {
+    background-color:  rgb(50, 50, 50);
+    transform: translateY(4px);
+  }
+
+.logo {
+    width: 30px;
+    height:auto;
+}
+  .example-container {
+    width: 400px;
+    height: 200px;
+    margin: 12px;
+    border: 1px solid #555;
+  }
+  
+  mat-drawer-content {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
