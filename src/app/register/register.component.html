@@ -1,0 +1,33 @@
+<button  (click)="back()" class="button-back"> <mat-icon>arrow_back</mat-icon> </button>
+<div class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+    <mat-card class="box">
+      <mat-card-header>
+        <mat-card-title>Register</mat-card-title>
+      </mat-card-header>
+      <form class="example-form" [formGroup]="registerForm" (ngSubmit)="Submit()">
+        <mat-card-content>
+          <mat-form-field class="example-full-width">
+            <input matInput formControlName="Email" placeholder="Email">
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <input matInput formControlName="Username" placeholder="Username">
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <input matInput formControlName="password" placeholder="Password" type="password">
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <input matInput formControlName="Compte" placeholder="Compte">
+          </mat-form-field>
+          <mat-form-field class="invisible example-full-width">
+            <input matInput formControlName="Position_x" placeholder="Position_x" value="0">
+          </mat-form-field>
+          <mat-form-field class="invisible example-full-width">
+            <input matInput  formControlName="Position_y" placeholder="Position_y" value="0">
+          </mat-form-field>
+        </mat-card-content>
+        <div class="button-login">
+        <button mat-stroked-button color="accent" type="submit" class="btn-block">Register</button>
+        </div>
+      </form>
+    </mat-card>
+  </div>

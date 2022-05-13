@@ -1,0 +1,16 @@
+.split-view-container {
+    display: flex;
+    justify-content: space-evenly;
+    height: 100%;
+}
+
+.left {
+
+    width: 100%;
+}
+
+.right {
+    background: lightgray;
+    width: 100%;
+
+}
