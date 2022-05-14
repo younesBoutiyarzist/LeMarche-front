@@ -16,7 +16,7 @@
   }
   .login-wrapper mat-card-header mat-card-title {
     font-size: 30px;
-    margin: 0;
+    margin: 2;
   }
   .login-wrapper .mat-card {
     padding: 40px 70px 50px;
@@ -50,3 +50,16 @@ color: black;
 .button-back:active {
     transform: translateX(-4px);
   }
+
+.balance-class {
+  text-align: left;
+}
+
+input.balance-class::-webkit-outer-spin-button,
+input.balance-class::-webkit-inner-spin-button {
+  display: none;
+}
+
+input.balance-class {
+  -moz-appearance: textfield;
+}

@@ -16,7 +16,7 @@
   }
   .login-wrapper mat-card-header mat-card-title {
     font-size: 30px;
-    margin: 0;
+    margin: 2;
   }
   .login-wrapper .mat-card {
     padding: 40px 70px 50px;
