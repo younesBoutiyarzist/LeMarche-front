@@ -11,6 +11,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatDialogModule} from '@angular/material/dialog';
 
 
 import { AppComponent } from './app.component';
@@ -19,6 +21,7 @@ import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ClientComponent } from './client/client.component';
+import { DialogQuantityComponent } from './dialog-quantity/dialog-quantity.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,8 @@ import { ClientComponent } from './client/client.component';
     HeaderComponent,
     LoginComponent,
     RegisterComponent,
-    ClientComponent
+    ClientComponent,
+    DialogQuantityComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +46,9 @@ import { ClientComponent } from './client/client.component';
     MatSidenavModule,
     MatInputModule,
     MatDividerModule,
-    HttpClientModule
+    HttpClientModule,
+    MatAutocompleteModule,
+    MatDialogModule
 
   ],
   providers: [],

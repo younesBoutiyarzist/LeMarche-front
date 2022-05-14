@@ -1,14 +1,43 @@
 <div class="split-view-container">
     <div class="left">
-        <p><input type="text" ng-model="test"></p>
-
-        <ul>
-            <li *ngFor="let product of list_product">{{ product.name }}</li>
-        </ul>
-
+        <div class="left-inside">
+        <form class="example-form">
+            <mat-form-field class="example-full-width" >
+              <mat-label>Product</mat-label>
+              <input type="text"
+                     placeholder="name of the product"
+                     aria-label="name"
+                     matInput
+                     [formControl]="myControl"
+                     [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+              </mat-autocomplete>
+            </mat-form-field>
+          </form>
+          <div *ngFor="let product of filteredOptions| async">
+            <button class="button"(click)=" openDialog(product.id);">
+                <div class="button-inside">
+                 <div>{{product.name}} </div>
+                <div>{{product.price}}</div>
+                </div>
+            </button>  
+          </div>
+        </div>
     </div>
     <div class="right">
-      <h1>Right view</h1>
-  
+      <div *ngIf="basket.length == 0">
+
+        <div><mat-icon>shopping_basket</mat-icon></div>
+      </div>
+      <div *ngIf="basket.length != 0">
+
+        <div *ngFor="let element of basket">
+              <button class="button button-inside">
+               <div>{{element.name}} </div>
+              <div>{{element.quantity}}</div>
+              </button>
+        </div>
+
+      </div>
     </div>
   </div>
