@@ -2,7 +2,7 @@
 <mat-drawer-container class="container" [hasBackdrop]="hasBackdrop">
     <mat-drawer #drawer>
             <div class="conc-button">
-              <button mat-button class="button" (click)="affichage(0);drawer.close()"> Login </button>
+              <button mat-button class="button" (click)="affichage(0);drawer.close()"> Login/Settings </button>
             </div>
             <mat-divider></mat-divider>
             <div class="conc-button">
@@ -21,6 +21,8 @@
       <div *ngIf="section === 1" class="section">
         <app-client></app-client>
       </div>
-      <div *ngIf="section === 2" class="section">ici section 2</div>
+      <div *ngIf="section === 2" class="section">
+        <app-vendeur></app-vendeur>
+      </div>
     </mat-drawer-content>
 </mat-drawer-container>

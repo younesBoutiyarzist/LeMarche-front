@@ -20,7 +20,7 @@
   }
   .login-wrapper .mat-card {
     padding: 40px 70px 50px;
-    margin: 15% 10%;
+    margin: 5% 10%;
   }
   .login-wrapper .mat-stroked-button {
     border: 1px solid currentColor;
@@ -39,7 +39,8 @@
 
     background-color:rgb(50, 50, 50);
     border: 0;
-    padding: 10px 16px 0 16px;
+    padding: 15px 20px;
+    margin: 5px;
     transition-duration: 0.4s;
     color: white;
 }

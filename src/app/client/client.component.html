@@ -14,6 +14,12 @@
               </mat-autocomplete>
             </mat-form-field>
           </form>
+          <mat-divider></mat-divider>
+          <div class="table-header button-inside">
+            <div>Product name </div>
+           <div>price</div>
+         </div>
+         <mat-divider></mat-divider>
           <div *ngFor="let product of filteredOptions| async">
             <button class="button"(click)=" openDialog(product.id);">
                 <div class="button-inside">
@@ -25,17 +31,32 @@
         </div>
     </div>
     <div class="right">
-      <div *ngIf="basket.length == 0">
+      <div *ngIf="basket.length == 0" class="basket">
 
-        <div><mat-icon>shopping_basket</mat-icon></div>
+        <div><mat-icon  class="basket-icon">shopping_basket</mat-icon></div>
+        <div>Empty Basket</div>
       </div>
       <div *ngIf="basket.length != 0">
-
+        <div class="table-header button-inside">
+           <div>Product name </div>
+          <div>quantity</div>
+          <div>Action</div>
+        </div>
+        <mat-divider></mat-divider>
         <div *ngFor="let element of basket">
-              <button class="button button-inside">
+              <div class="button button-inside">
                <div>{{element.name}} </div>
               <div>{{element.quantity}}</div>
-              </button>
+              <button class="button-icon" (click)=" deleteElement(element);"><mat-icon>delete_outline</mat-icon></button>
+              </div>
+        </div>
+
+        <div class="action">
+          <mat-divider></mat-divider>
+          <div class="table-header button-inside">
+            <button  class="button-icon button"><mat-icon>close</mat-icon></button>
+            <button class="button-icon button"><mat-icon>check</mat-icon> </button>
+         </div>
         </div>
 
       </div>

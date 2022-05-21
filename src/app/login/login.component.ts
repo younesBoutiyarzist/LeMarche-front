@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-
+import { ApiService } from '../api.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -8,6 +8,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   IsRegister = true;
+  IsConnected = this.api.idUser != undefined;
 
   loginForm = new FormGroup({
     Username: new FormControl(''),
@@ -18,6 +19,11 @@ export class LoginComponent implements OnInit {
   mdp = this.loginForm.get("Password");
   
   hide = true;
+
+  constructor(public api: ApiService) { }
+
+  ngOnInit(): void {
+  }
 
   getErrorMessageUsername() {
     // A modifier avec la base de donner, verifier qu'il existe et correspond a son mdp
@@ -40,10 +46,6 @@ export class LoginComponent implements OnInit {
     return "";
   }
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
   reverseRegister() {
     this.IsRegister = !this.IsRegister;

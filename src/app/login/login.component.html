@@ -1,5 +1,23 @@
 
-<div  *ngIf="IsRegister" class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
+<div *ngIf="IsConnected">
+  <mat-card class="box action">
+    <mat-card-header>
+      <mat-card-title class="title">Delete my Account</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+       <h3>Would you want to delete your Account ?</h3>
+      <div>
+        <mat-divider></mat-divider>
+        <div class="table-header button-inside">
+          <button  class="button-icon button"><mat-icon>close</mat-icon></button>
+          <button class="button-icon button"><mat-icon>check</mat-icon> </button>
+       </div>
+      </div>
+      
+    </mat-card-content>
+  </mat-card>
+</div>
+<div  *ngIf="!IsConnected && IsRegister" class="login-wrapper" fxLayout="row" fxLayoutAlign="center center">
     <mat-card class="box">
       <mat-card-header>
         <mat-card-title>Log in</mat-card-title>
@@ -27,4 +45,4 @@
       </form>
     </mat-card>
   </div>
-  <app-register  *ngIf="!IsRegister" (backEvent)="reverseRegister()"></app-register>
+  <app-register  *ngIf="!IsConnected && !IsRegister" (backEvent)="reverseRegister()"></app-register>

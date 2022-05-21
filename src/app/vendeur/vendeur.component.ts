@@ -8,11 +8,11 @@ import { DialogQuantityComponent } from '../dialog-quantity/dialog-quantity.comp
 import { Element } from '../models/element.model';
 
 @Component({
-  selector: 'app-client',
-  templateUrl: './client.component.html',
-  styleUrls: ['./client.component.css']
+  selector: 'app-vendeur',
+  templateUrl: './vendeur.component.html',
+  styleUrls: ['./vendeur.component.css']
 })
-export class ClientComponent implements OnInit {
+export class VendeurComponent implements OnInit {
 
   list_product: Product[] = [
     new Product({"id":0,"name":"pomme","price":0.2}),
@@ -84,4 +84,5 @@ export class ClientComponent implements OnInit {
   })
   console.log(this.basket);
   }
+
 }

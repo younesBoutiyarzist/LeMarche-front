@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-register',
@@ -13,6 +14,7 @@ export class RegisterComponent implements OnInit {
   @Output() backEvent = new EventEmitter<boolean>();
 
   registerForm = new FormGroup({
+    Type: new FormControl(''),
     Username: new FormControl(''),
     Email: new FormControl('',Validators.email),
     Password: new FormControl('', Validators.minLength(8)),
@@ -29,6 +31,11 @@ export class RegisterComponent implements OnInit {
   posY = this.registerForm.get("Position_y");
   
   hide = true;
+
+  constructor(public api: ApiService) { }
+
+  ngOnInit(): void {
+  }
 
   getErrorMessageEmail() {
     if(this.email != null){
@@ -88,23 +95,31 @@ export class RegisterComponent implements OnInit {
     return "";
   }
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
   back() {
     this.backEvent.emit(true);
   }
 
   Submit(){
-    console.log('workin');
-    if (this.registerForm.invalid) {
-      return;
-    } else {
-      console.log(this.registerForm.value);
-      //envoie info au back
-    }
+    if (!this.registerForm.invalid) {
+      if (this.registerForm.value.Type.localeCompare("Customer")) {
+        this.api.addCustomer(this.registerForm.value.Username, Number(this.registerForm.value.Position_x),
+        Number(this.registerForm.value.Position_y), Number(this.registerForm.value.Compte)).subscribe((data:any) => {
+          this.api.idUser = 0;
+          this.api.typeUser = "Customer";
+          //TO DO
+      }
+
+        );
+      } else {
+        this.api.addSeller(this.registerForm.value.Username, Number(this.registerForm.value.Position_x),
+        Number(this.registerForm.value.Position_y), Number(this.registerForm.value.Compte)).subscribe((data:any) => {
+          this.api.idUser = 0;
+          this.api.typeUser = "Customer";
+          //TO DO
+      })
+
+      }
+    } 
   }
 
 }

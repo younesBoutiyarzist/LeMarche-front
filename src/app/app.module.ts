@@ -13,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatSelectModule} from '@angular/material/select';
 
 
 import { AppComponent } from './app.component';
@@ -22,6 +23,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ClientComponent } from './client/client.component';
 import { DialogQuantityComponent } from './dialog-quantity/dialog-quantity.component';
+import { VendeurComponent } from './vendeur/vendeur.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { DialogQuantityComponent } from './dialog-quantity/dialog-quantity.compo
     LoginComponent,
     RegisterComponent,
     ClientComponent,
-    DialogQuantityComponent
+    DialogQuantityComponent,
+    VendeurComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +51,8 @@ import { DialogQuantityComponent } from './dialog-quantity/dialog-quantity.compo
     MatDividerModule,
     HttpClientModule,
     MatAutocompleteModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSelectModule
 
   ],
   providers: [],

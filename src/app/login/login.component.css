@@ -20,7 +20,7 @@
   }
   .login-wrapper .mat-card {
     padding: 40px 70px 50px;
-    margin: 15% 10%;
+    margin: 10% 10%;
   }
   .login-wrapper .mat-stroked-button {
     border: 1px solid currentColor;
@@ -34,3 +34,51 @@
     display: flex;
     justify-content: space-between;
   }
+  .button-icon {
+    background-color: transparent;
+    color: white;
+    border : 0;
+    padding: 3px;
+  }
+.table-header {
+    background-color: transparent;
+    color: white;
+    border: 0;
+    transition-duration: 0.4s;
+    width: 100%;
+    font-size: 1.2em;
+}
+  .button {
+    background-color: transparent;
+    color: white;
+    border: 0;
+    transition-duration: 0.4s;
+    width: 100%;
+    font-size: 1.2em;
+    padding: 10px 7px;
+}
+.button:hover {
+    background-color: rgb(75, 75, 75); 
+    color: white;
+    }
+
+.button-inside {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: fit-content;
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.title {
+  padding-bottom: 8px;
+}
