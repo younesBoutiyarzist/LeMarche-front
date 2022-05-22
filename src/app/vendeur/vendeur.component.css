@@ -11,12 +11,7 @@
   .example-full-width {
     width: 100%;
   }
-  .button-icon {
-    background-color: transparent;
-    color: white;
-    border : 0;
-    padding: 3px;
-  }
+
 .table-header {
     background-color: transparent;
     color: white;
@@ -44,4 +39,23 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.button-icon {
+  background-color: transparent;
+  color: white;
+  border: 0;
+  transition-duration: 0.4s;
+  font-size: 1.2em;
+  padding: 7px 7px;
+  margin-bottom: 3px;
+}
+.button-icon:hover {
+  background-color: rgb(75, 75, 75); 
+  color: white;
+  }
+
+.header{
+  display: flex;
+  justify-content: space-evenly;
 }

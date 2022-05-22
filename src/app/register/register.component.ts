@@ -12,6 +12,7 @@ import { ApiService } from '../api.service';
 export class RegisterComponent implements OnInit {
 
   @Output() backEvent = new EventEmitter<boolean>();
+  @Output() ValidateEvent = new EventEmitter<boolean>();
 
   registerForm = new FormGroup({
     Type: new FormControl(''),
@@ -99,14 +100,16 @@ export class RegisterComponent implements OnInit {
     this.backEvent.emit(true);
   }
 
+
   Submit(){
     if (!this.registerForm.invalid) {
-      if (this.registerForm.value.Type.localeCompare("Customer")) {
+      if (this.registerForm.value.Type == "Customer") {
         this.api.addCustomer(this.registerForm.value.Username, Number(this.registerForm.value.Position_x),
         Number(this.registerForm.value.Position_y), Number(this.registerForm.value.Compte)).subscribe((data:any) => {
           this.api.idUser = 0;
           this.api.typeUser = "Customer";
           //TO DO
+          this.ValidateEvent.emit(true);
       }
 
         );
@@ -114,7 +117,9 @@ export class RegisterComponent implements OnInit {
         this.api.addSeller(this.registerForm.value.Username, Number(this.registerForm.value.Position_x),
         Number(this.registerForm.value.Position_y), Number(this.registerForm.value.Compte)).subscribe((data:any) => {
           this.api.idUser = 0;
-          this.api.typeUser = "Customer";
+          this.api.typeUser = "Seller";
+          this.ValidateEvent.emit(true);
+
           //TO DO
       })
 

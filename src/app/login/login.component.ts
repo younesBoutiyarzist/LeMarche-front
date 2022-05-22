@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Output, EventEmitter } from '@angular/core';
 import { ApiService } from '../api.service';
 @Component({
   selector: 'app-login',
@@ -9,6 +10,8 @@ import { ApiService } from '../api.service';
 export class LoginComponent implements OnInit {
   IsRegister = true;
   IsConnected = this.api.idUser != undefined;
+  @Output() ValidateEvent = new EventEmitter<boolean>();
+
 
   loginForm = new FormGroup({
     Username: new FormControl(''),
@@ -50,9 +53,11 @@ export class LoginComponent implements OnInit {
   reverseRegister() {
     this.IsRegister = !this.IsRegister;
   }
+  emit() {
+    this.ValidateEvent.emit(true);
+  }
 
   Submit(){
-    console.log('workin');
     if (this.loginForm.invalid) {
       return;
     } else {

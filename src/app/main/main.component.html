@@ -5,24 +5,31 @@
               <button mat-button class="button" (click)="affichage(0);drawer.close()"> Login/Settings </button>
             </div>
             <mat-divider></mat-divider>
-            <div class="conc-button">
-              <button mat-button class="button" (click)="affichage(1);drawer.close()"> Client </button>
+            <div  class="conc-button">
+              <button mat-button class="button" (click)="affichage(1);drawer.close()"> Customer </button>
             </div>
           <mat-divider></mat-divider>
-          <div class="conc-button">
-            <button mat-button class="button"  (click)="affichage(2);drawer.close()"> Vendeur </button>
+          <div  class="conc-button">
+            <button mat-button class="button"  (click)="affichage(2);drawer.close()"> Seller </button>
           </div>
       <mat-divider></mat-divider>
+      <div  class="conc-button">
+        <button mat-button class="button"  (click)="affichage(3);drawer.close()"> History </button>
+      </div>
+  <mat-divider></mat-divider>
     </mat-drawer>
     <mat-drawer-content>
       <div *ngIf="section === 0" class="section"> 
-        <app-login></app-login>
+        <app-login (ValidateEvent)="changePage()" ></app-login>
       </div>
       <div *ngIf="section === 1" class="section">
         <app-client></app-client>
       </div>
       <div *ngIf="section === 2" class="section">
         <app-vendeur></app-vendeur>
+      </div>
+      <div *ngIf="section === 3" class="section">
+        <app-history></app-history>
       </div>
     </mat-drawer-content>
 </mat-drawer-container>

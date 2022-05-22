@@ -8,15 +8,21 @@ import { Product } from '..//models/product.model';
 })
 export class MainComponent implements OnInit {
   hasBackdrop = true;
+  typeUser = this.api.typeUser;
   section = 0;
   data :Product[] = [];
-  constructor(private api: ApiService) { }
+  constructor(public api: ApiService) { }
 
   ngOnInit() {
   }
 
-  voir() {
-    console.log(this.data[0]);
+  changePage() {
+    console.log(this.api.typeUser);
+    if(this.api.typeUser == 'Customer') {
+      this.affichage(1);
+    } else {
+      this.affichage(2);
+    }
   }
   affichage(i:number): void {
     this.section = i;

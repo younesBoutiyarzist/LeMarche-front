@@ -45,4 +45,4 @@
       </form>
     </mat-card>
   </div>
-  <app-register  *ngIf="!IsConnected && !IsRegister" (backEvent)="reverseRegister()"></app-register>
+  <app-register  *ngIf="!IsConnected && !IsRegister" (backEvent)="reverseRegister()" (ValidateEvent) ="emit()"></app-register>

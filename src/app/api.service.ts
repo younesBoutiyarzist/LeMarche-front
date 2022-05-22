@@ -34,30 +34,30 @@ removeCustomer(id: number) {
   return this.http.get(this.configUrl + "id=" + id.toString() + "&op=removeCustomer" );
 }
 
-addProduct(id: number, name: string, price: number, quantity: number) {
-  return this.http.get(this.configUrl + "idProduct=" + id.toString() + "&name=" + name + "&price=" +
+addProduct(idSeller: number, name: string, price: number, quantity: number) {
+  return this.http.get(this.configUrl + "idSeller=" + idSeller.toString() + "&name=" + name + "&price=" +
   price.toString() + "&q=" + quantity.toString() + "&op=addProduct" );
 }
 
-removeProduct(id: number) {
-  return this.http.get(this.configUrl + "idProduct=" + id.toString()  + "&op=removeProduct" );
+removeProduct(idProduct: number) {
+  return this.http.get(this.configUrl + "idProduct=" + idProduct.toString()  + "&op=removeProduct" );
 }
-updateStock(id: number, idProduct: number, quantity: number) {
-  return this.http.get(this.configUrl + "idSeller=" + id.toString() + "&idProduct=" + idProduct.toString() + "&q=" + quantity.toString()  + "&op=updateStock", {responseType: 'json'});
+updateStock(idSeller: number, idProduct: number, quantity: number) {
+  return this.http.get(this.configUrl + "idSeller=" + idSeller.toString() + "&idProduct=" + idProduct.toString() + "&q=" + quantity.toString()  + "&op=updateStock", {responseType: 'json'});
 
 }
 
-updatePrice(id: number, price: number) {
-  return this.http.get(this.configUrl + "idProduct=" + id.toString() + "&price=" +  price.toString() + "&op=updatePrice", {responseType: 'json'});
+updatePrice(idSeller: number, idProduct: number, price: number) {
+  return this.http.get(this.configUrl + "idProduct=" + idProduct.toString() + "idSeller=" + idSeller.toString() + "&price=" +  price.toString() + "&op=updatePrice", {responseType: 'json'});
 
 }
-listProducts(id: number, price: number) {
+listProducts() {
   return this.http.get(this.configUrl + "op=listProducts" , {responseType: 'json'});
 
 }
 
-addToBasket(id: number, idProduct: number, price: number, quantity : number) {
-  return this.http.get(this.configUrl + "idCustomer=" + id.toString() + "&idProduct=" +  idProduct.toString() + "&q=" + quantity.toString() + "&op=addToBasket", {responseType: 'json'});
+addToBasket(idCustomer: number, idProduct: number, price: number, quantity : number) {
+  return this.http.get(this.configUrl + "idCustomer=" + idCustomer.toString() + "&idProduct=" +  idProduct.toString() + "&q=" + quantity.toString() + "&op=addToBasket", {responseType: 'json'});
 
 }
 

@@ -5,7 +5,9 @@ import {map, startWith} from 'rxjs/operators';
 import { Product } from '../models/product.model';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { DialogQuantityComponent } from '../dialog-quantity/dialog-quantity.component';
+import { DialogAddProductComponent } from '../dialog-add-product/dialog-add-product.component';
 import { Element } from '../models/element.model';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-vendeur',
@@ -14,14 +16,10 @@ import { Element } from '../models/element.model';
 })
 export class VendeurComponent implements OnInit {
 
-  list_product: Product[] = [
-    new Product({"id":0,"name":"pomme","price":0.2}),
-    new Product({"id":1,"name":"poire","price":10}),
-    new Product({"id":2,"name":"joe","price":3000.0})
-  ];
-  basket: Element[] = []; 
+  list_product: Product[] = [];
+  
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, public api: ApiService) { }
 
   myControl = new FormControl();
   products_name: string[] = [];
@@ -30,13 +28,23 @@ export class VendeurComponent implements OnInit {
   filteredOptions: Observable<string[]> | any ;
 
   ngOnInit() {
+    this.api.getStock(0).subscribe((data:any) => {
+      this.list_product = data;
+      this.update();
+
+  })
+  }
+  private update() {
+    this.products_name = [];
     for(var p of this.list_product ) {
       this.products_name?.push(p.name != undefined ? p.name : "null");
     }
+    this.products_name.sort();
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value)),
     );
+
   }
 
   private _filter(value: string):Product[] {
@@ -58,31 +66,44 @@ export class VendeurComponent implements OnInit {
   }
 
 
-  openDialog(id:number): void {
-    const dialogRef = this.dialog.open(DialogQuantityComponent, {
+  openDialog(id: number, nameProd:string, priceProd: number): void { //add Quantity later TO DO
+    const dialogRef = this.dialog.open(DialogAddProductComponent, {
+      width: '250px',
+      data: {name: nameProd, price: priceProd},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.api.removeProduct(id);
+      this.api.getStock(0).subscribe( (data :any) =>
+      {
+        this.list_product = data;
+        this.update();
+      });
+    });
+  }
+
+  deleteElement(id: number) {
+    
+    this.api.removeProduct(id).subscribe(() => {
+      this.list_product = this.list_product.filter(e => e.id != id);
+      this.update();
+
+    });
+  }
+
+  addElement() {
+    
+    const dialogRef = this.dialog.open(DialogAddProductComponent, {
       width: '250px',
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      let quantity = result;
-      var found = this.list_product.find(function(product) {
-        return product.id == id;
-      });
-      if (Number.isInteger(quantity)) {
-        this.basket.push({
-          "name" : found?.name,
-          "quantity" : quantity
-        })
-    }
+      //TO CHANGE
+      this.api.listProducts().subscribe( (data :any) =>
+      {
+        this.list_product = data;
+        this.update();
+      })
     });
   }
-
-  deleteElement(element: Element) {
-    console.log(this.basket);
-    this.basket = this.basket.filter(function(value, index, arr){ 
-      return value.name != element.name;
-  })
-  console.log(this.basket);
-  }
-
 }

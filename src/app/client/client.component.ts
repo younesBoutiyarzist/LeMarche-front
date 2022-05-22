@@ -6,6 +6,7 @@ import { Product } from '../models/product.model';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { DialogQuantityComponent } from '../dialog-quantity/dialog-quantity.component';
 import { Element } from '../models/element.model';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-client',
@@ -14,14 +15,10 @@ import { Element } from '../models/element.model';
 })
 export class ClientComponent implements OnInit {
 
-  list_product: Product[] = [
-    new Product({"id":0,"name":"pomme","price":0.2}),
-    new Product({"id":1,"name":"poire","price":10}),
-    new Product({"id":2,"name":"joe","price":3000.0})
-  ];
+  list_product: Product[] = [];
   basket: Element[] = []; 
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, public api : ApiService) { }
 
   myControl = new FormControl();
   products_name: string[] = [];
@@ -30,13 +27,17 @@ export class ClientComponent implements OnInit {
   filteredOptions: Observable<string[]> | any ;
 
   ngOnInit() {
-    for(var p of this.list_product ) {
-      this.products_name?.push(p.name != undefined ? p.name : "null");
-    }
-    this.filteredOptions = this.myControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value)),
-    );
+    this.api.listProducts().subscribe((data:any) => {
+      this.list_product = data;
+      for(var p of this.list_product ) {
+        this.products_name?.push(p.name != undefined ? p.name : "null");
+      }
+      this.filteredOptions = this.myControl.valueChanges.pipe(
+        startWith(''),
+        map(value => this._filter(value)),
+      );
+  })
+    
   }
 
   private _filter(value: string):Product[] {

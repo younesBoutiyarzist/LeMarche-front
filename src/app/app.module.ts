@@ -24,6 +24,8 @@ import { RegisterComponent } from './register/register.component';
 import { ClientComponent } from './client/client.component';
 import { DialogQuantityComponent } from './dialog-quantity/dialog-quantity.component';
 import { VendeurComponent } from './vendeur/vendeur.component';
+import { HistoryComponent } from './history/history.component';
+import { DialogAddProductComponent } from './dialog-add-product/dialog-add-product.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,10 @@ import { VendeurComponent } from './vendeur/vendeur.component';
     RegisterComponent,
     ClientComponent,
     DialogQuantityComponent,
-    VendeurComponent
+    VendeurComponent,
+    HistoryComponent,
+    DialogAddProductComponent,
+    
   ],
   imports: [
     BrowserModule,
