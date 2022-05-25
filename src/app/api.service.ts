@@ -16,15 +16,23 @@ export class ApiService {
 
   configUrl = 'http://127.0.0.1:8080/OnlineShop/Serv?';
 
+loginCustomer(name: string, password : string) {
+  return this.http.get(this.configUrl + "name=" + name + "&op=findName", {responseType: 'json'} );
+}  
 
-addSeller(name: string, x : number, y: number, cash : number) {
+
+loginSeller(name: string, password : string) {
+  return this.http.get(this.configUrl + "name=" + name + "&pw=" + password.toString() + "&op=loginS", {responseType: 'json'} );
+} 
+
+addSeller(name: string, x : number, y: number, cash : number, password : string) {
   return this.http.get(this.configUrl + "name=" + name + "&x=" + x.toString() + "&y=" + y.toString() +
-   "&cash="+ cash.toString() + "&op=addSeller" );
+   "&cash="+ cash.toString() + "&pw=" + password.toString() + "&op=addSeller" );
 }
 
-addCustomer(name: string, x : number, y: number, cash : number) {
+addCustomer(name: string, x : number, y: number, cash : number, password : string) {
   return this.http.get(this.configUrl + "name=" + name + "&x=" + x.toString() + "&y=" + y.toString() +
-   "&cash="+ cash.toString() + "&op=addBuyer" );
+   "&cash="+ cash.toString() + "&pw=" + password.toString() + "&op=addBuyer" );
 }
 removeSeller(id: number) {
   return this.http.get(this.configUrl + "id=" + id.toString() + "&op=removeSeller" );

@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
 
 
   loginForm = new FormGroup({
+    Type: new FormControl(''),
     Username: new FormControl(''),
     Password: new FormControl('', Validators.minLength(8))
   });
@@ -58,11 +59,28 @@ export class LoginComponent implements OnInit {
   }
 
   Submit(){
-    if (this.loginForm.invalid) {
-      return;
-    } else {
-      console.log(this.loginForm.value);
-      //envoie info au back
-    }
+    if (!this.loginForm.invalid) {
+      if (this.loginForm.value.Type == "Customer") {
+        this.api.loginCustomer(this.loginForm.value.Username, this.loginForm.value.Password).subscribe((data:any) => {
+          console.log(data);
+          this.api.idUser = 0;
+          this.api.typeUser = "Customer";
+          //TO DO
+          this.ValidateEvent.emit(true);
+      }
+
+        );
+      } else {
+        this.api.loginSeller(this.loginForm.value.Username, this.loginForm.value.Password).subscribe((data:any) => {
+          console.log(data);
+          this.api.idUser = 0;
+          this.api.typeUser = "Seller";
+          this.ValidateEvent.emit(true);
+
+          //TO DO
+      })
+
+      }
+    } 
   }
 }

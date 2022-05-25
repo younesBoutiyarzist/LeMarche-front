@@ -105,7 +105,7 @@ export class RegisterComponent implements OnInit {
     if (!this.registerForm.invalid) {
       if (this.registerForm.value.Type == "Customer") {
         this.api.addCustomer(this.registerForm.value.Username, Number(this.registerForm.value.Position_x),
-        Number(this.registerForm.value.Position_y), Number(this.registerForm.value.Compte)).subscribe((data:any) => {
+        Number(this.registerForm.value.Position_y), Number(this.registerForm.value.Compte),this.registerForm.value.Password).subscribe((data:any) => {
           this.api.idUser = 0;
           this.api.typeUser = "Customer";
           //TO DO
@@ -115,7 +115,8 @@ export class RegisterComponent implements OnInit {
         );
       } else {
         this.api.addSeller(this.registerForm.value.Username, Number(this.registerForm.value.Position_x),
-        Number(this.registerForm.value.Position_y), Number(this.registerForm.value.Compte)).subscribe((data:any) => {
+        Number(this.registerForm.value.Position_y), Number(this.registerForm.value.Compte),this.registerForm.value.Password ).subscribe((data:any) => {
+          console.log(data);
           this.api.idUser = 0;
           this.api.typeUser = "Seller";
           this.ValidateEvent.emit(true);

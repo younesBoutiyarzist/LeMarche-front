@@ -24,6 +24,13 @@
       </mat-card-header>
       <form class="example-form" [formGroup]="loginForm" (ngSubmit)="Submit()">
         <mat-card-content>
+          <mat-form-field  class="example-full-width"  appearance="fill">
+            <mat-label>Select</mat-label>
+            <mat-select  formControlName="Type" required>
+              <mat-option value="Customer">Customer</mat-option>
+              <mat-option value="Seller">Seller</mat-option>
+            </mat-select>
+          </mat-form-field>
           <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Enter your username</mat-label>
             <input matInput formControlName="Username" placeholder="My Username" required>
