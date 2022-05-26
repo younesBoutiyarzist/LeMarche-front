@@ -45,17 +45,20 @@
         <mat-divider></mat-divider>
         <div *ngFor="let element of basket">
               <div class="button button-inside">
-               <div>{{element.name}} </div>
+               <div>{{element.product.name}} </div>
               <div>{{element.quantity}}</div>
-              <button class="button-icon" (click)=" deleteElement(element);"><mat-icon>delete_outline</mat-icon></button>
+              <div>
+                <button class="button-icon" (click)=" modifyQuantity(element.product.id, element.quantity)"><mat-icon>settings</mat-icon></button>
+                <button class="button-icon" (click)=" deleteElement(element);"><mat-icon>delete_outline</mat-icon></button>
+              </div>
               </div>
         </div>
 
         <div class="action">
           <mat-divider></mat-divider>
           <div class="table-header button-inside">
-            <button  class="button-icon button"><mat-icon>close</mat-icon></button>
-            <button class="button-icon button"><mat-icon>check</mat-icon> </button>
+            <button  class="button-icon button" (click)= "deleteBasket()"><mat-icon>close</mat-icon></button>
+            <button class="button-icon button" (click)= "validateBasket()"><mat-icon>check</mat-icon> </button>
          </div>
         </div>
 

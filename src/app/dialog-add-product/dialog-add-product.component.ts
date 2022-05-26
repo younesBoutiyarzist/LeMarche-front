@@ -17,6 +17,9 @@ export class DialogAddProductComponent implements OnInit {
     Quantity: new FormControl(this.data?.quantity? this.data.quantity : '')
   });
 
+  quantity = this.data.quantity;
+  price = this.data.price;
+
   constructor( public dialogRef: MatDialogRef<DialogAddProductComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,public api: ApiService) { }
 
@@ -28,9 +31,26 @@ export class DialogAddProductComponent implements OnInit {
     if (this.addForm.invalid) {
       return;
     } else {
-      this.api.addProduct(0, this.addForm.value.Name,Number(this.addForm.value.Price), Number(this.addForm.value.Quantity )).subscribe( (data: any) => {
+      if ( this.data.name != undefined) {
+        console.log(this.data.quantity);
+        console.log( this.addForm.value.Quantity);
+        if (this.data.quantity != this.addForm.value.Quantity) {
+          this.api.updateStock(this.api.idUser? this.api.idUser : 0, this.data.id,  this.addForm.value.Quantity).subscribe((data: any) => {
+
+          });
+        }
+        if (this.data.price != this.addForm.value.Price) {
+          this.api.updatePrice(this.api.idUser? this.api.idUser : 0, this.data.id,  this.addForm.value.Price).subscribe((data: any) => {
+            
+          });
+        }
+        this.dialogRef.close();
+      } else {
+              this.api.addProduct(this.api.idUser? this.api.idUser : 0, this.addForm.value.Name,Number(this.addForm.value.Price), Number(this.addForm.value.Quantity )).subscribe( (data: any) => {
           this.dialogRef.close();
       })
+      }
+
     }
   }
 }

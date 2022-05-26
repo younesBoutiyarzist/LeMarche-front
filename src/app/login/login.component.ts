@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Output, EventEmitter } from '@angular/core';
 import { ApiService } from '../api.service';
+import { Personne } from '../models/personne.model';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -21,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   username = this.loginForm.get("Username");
   mdp = this.loginForm.get("Password");
-  
+  personne : Personne | undefined;
   hide = true;
 
   constructor(public api: ApiService) { }
@@ -58,22 +59,33 @@ export class LoginComponent implements OnInit {
     this.ValidateEvent.emit(true);
   }
 
+  deleteAccount() {
+   if ( this.api.typeUser == "Customer") {
+      this.api.removeCustomer(this.api.idUser? this.api.idUser : 0).subscribe((data :any) => {
+        this.IsConnected = false;
+      })
+   } else {
+    this.api.removeSeller(this.api.idUser? this.api.idUser : 0).subscribe((data :any) => {
+      this.IsConnected = false;
+    })
+
+   }
+  }
   Submit(){
     if (!this.loginForm.invalid) {
       if (this.loginForm.value.Type == "Customer") {
         this.api.loginCustomer(this.loginForm.value.Username, this.loginForm.value.Password).subscribe((data:any) => {
-          console.log(data);
-          this.api.idUser = 0;
+          this.personne = data;
+          this.api.idUser =  this.personne?.id;
           this.api.typeUser = "Customer";
-          //TO DO
           this.ValidateEvent.emit(true);
       }
 
         );
       } else {
         this.api.loginSeller(this.loginForm.value.Username, this.loginForm.value.Password).subscribe((data:any) => {
-          console.log(data);
-          this.api.idUser = 0;
+          this.personne = data;
+          this.api.idUser =  this.personne?.id;
           this.api.typeUser = "Seller";
           this.ValidateEvent.emit(true);
 

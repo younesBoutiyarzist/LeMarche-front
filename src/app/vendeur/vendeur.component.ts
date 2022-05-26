@@ -6,8 +6,8 @@ import { Product } from '../models/product.model';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { DialogQuantityComponent } from '../dialog-quantity/dialog-quantity.component';
 import { DialogAddProductComponent } from '../dialog-add-product/dialog-add-product.component';
-import { Element } from '../models/element.model';
 import { ApiService } from '../api.service';
+import { Item } from '../models/item.model';
 
 @Component({
   selector: 'app-vendeur',
@@ -16,7 +16,7 @@ import { ApiService } from '../api.service';
 })
 export class VendeurComponent implements OnInit {
 
-  list_product: Product[] = [];
+  list_product: Item[] = [];
   
 
   constructor(public dialog: MatDialog, public api: ApiService) { }
@@ -28,8 +28,10 @@ export class VendeurComponent implements OnInit {
   filteredOptions: Observable<string[]> | any ;
 
   ngOnInit() {
-    this.api.getStock(0).subscribe((data:any) => {
+    console.log(this.api.idUser);
+    this.api.getStock(this.api.idUser? this.api.idUser : 0).subscribe((data:any) => {
       this.list_product = data;
+      console.log( this.list_product);
       this.update();
 
   })
@@ -37,7 +39,7 @@ export class VendeurComponent implements OnInit {
   private update() {
     this.products_name = [];
     for(var p of this.list_product ) {
-      this.products_name?.push(p.name != undefined ? p.name : "null");
+      this.products_name?.push(p.product? p.product.name : "null");
     }
     this.products_name.sort();
     this.filteredOptions = this.myControl.valueChanges.pipe(
@@ -47,10 +49,10 @@ export class VendeurComponent implements OnInit {
 
   }
 
-  private _filter(value: string):Product[] {
+  private _filter(value: string):Item[] {
     const filterValue = value.toLowerCase();
     let list_index: number[] = [];
-    let list_product_filter: Product[] = [];
+    let list_product_filter: Item[] = [];
     this.products_name?.filter((name, index) => {
       if(name.toLowerCase().includes(filterValue))
         {
@@ -66,15 +68,15 @@ export class VendeurComponent implements OnInit {
   }
 
 
-  openDialog(id: number, nameProd:string, priceProd: number): void { //add Quantity later TO DO
+  openDialog(idProduct: number, nameProd:string, priceProd: number, quantityProd: number): void { //add Quantity later TO DO
     const dialogRef = this.dialog.open(DialogAddProductComponent, {
       width: '250px',
-      data: {name: nameProd, price: priceProd},
+      data: {id: idProduct, name: nameProd, price: priceProd, quantity: quantityProd},
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.api.removeProduct(id);
-      this.api.getStock(0).subscribe( (data :any) =>
+      this.api.removeProduct(idProduct);
+      this.api.getStock(this.api.idUser? this.api.idUser : 0).subscribe( (data :any) =>
       {
         this.list_product = data;
         this.update();
@@ -85,7 +87,7 @@ export class VendeurComponent implements OnInit {
   deleteElement(id: number) {
     
     this.api.removeProduct(id).subscribe(() => {
-      this.list_product = this.list_product.filter(e => e.id != id);
+      this.list_product = this.list_product.filter(e => e.product? e.product.id != id : true); 
       this.update();
 
     });
@@ -99,7 +101,8 @@ export class VendeurComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       //TO CHANGE
-      this.api.listProducts().subscribe( (data :any) =>
+      console.log(this.api.idUser);
+      this.api.getStock(this.api.idUser? this.api.idUser : 0).subscribe( (data :any) =>
       {
         this.list_product = data;
         this.update();

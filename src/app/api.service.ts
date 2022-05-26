@@ -17,7 +17,7 @@ export class ApiService {
   configUrl = 'http://127.0.0.1:8080/OnlineShop/Serv?';
 
 loginCustomer(name: string, password : string) {
-  return this.http.get(this.configUrl + "name=" + name + "&op=findName", {responseType: 'json'} );
+  return this.http.get(this.configUrl + "name=" + name + "&pw=" + password.toString() +  "&op=loginB", {responseType: 'json'} );
 }  
 
 
@@ -25,13 +25,13 @@ loginSeller(name: string, password : string) {
   return this.http.get(this.configUrl + "name=" + name + "&pw=" + password.toString() + "&op=loginS", {responseType: 'json'} );
 } 
 
-addSeller(name: string, x : number, y: number, cash : number, password : string) {
-  return this.http.get(this.configUrl + "name=" + name + "&x=" + x.toString() + "&y=" + y.toString() +
+addSeller(name: string, cash : number, password : string) {
+  return this.http.get(this.configUrl + "name=" + name +
    "&cash="+ cash.toString() + "&pw=" + password.toString() + "&op=addSeller" );
 }
 
-addCustomer(name: string, x : number, y: number, cash : number, password : string) {
-  return this.http.get(this.configUrl + "name=" + name + "&x=" + x.toString() + "&y=" + y.toString() +
+addCustomer(name: string, cash : number, password : string) {
+  return this.http.get(this.configUrl + "name=" + name + 
    "&cash="+ cash.toString() + "&pw=" + password.toString() + "&op=addBuyer" );
 }
 removeSeller(id: number) {
@@ -56,7 +56,7 @@ updateStock(idSeller: number, idProduct: number, quantity: number) {
 }
 
 updatePrice(idSeller: number, idProduct: number, price: number) {
-  return this.http.get(this.configUrl + "idProduct=" + idProduct.toString() + "idSeller=" + idSeller.toString() + "&price=" +  price.toString() + "&op=updatePrice", {responseType: 'json'});
+  return this.http.get(this.configUrl + "idProduct=" + idProduct.toString() + "&idSeller=" + idSeller.toString() + "&price=" +  price.toString() + "&op=updatePrice", {responseType: 'json'});
 
 }
 listProducts() {
@@ -64,7 +64,7 @@ listProducts() {
 
 }
 
-addToBasket(idCustomer: number, idProduct: number, price: number, quantity : number) {
+addToBasket(idCustomer: number, idProduct: number, quantity : number) {
   return this.http.get(this.configUrl + "idCustomer=" + idCustomer.toString() + "&idProduct=" +  idProduct.toString() + "&q=" + quantity.toString() + "&op=addToBasket", {responseType: 'json'});
 
 }
@@ -74,13 +74,13 @@ removeFromBasket(idCustomer: number, idProduct: number) {
 
 }
 
-resetBasket(idCustomer: number, idProduct: number) {
-  return this.http.get(this.configUrl + "idCustomer=" +  idProduct.toString() + "&op=resetBasket", {responseType: 'json'});
+resetBasket(idCustomer: number) {
+  return this.http.get(this.configUrl + "idCustomer=" +  idCustomer.toString() + "&op=resetBasket", {responseType: 'json'});
 
 }
 
 editBasketQuantity(idCustomer: number, idProduct: number, quantity:number) {
-  return this.http.get(this.configUrl + "idCustomer=" +  idCustomer.toString()  + "idProduct=" +  idProduct.toString() + "&q=" + quantity.toString() +  "&op=editBasketQuantity", {responseType: 'json'});
+  return this.http.get(this.configUrl + "idCustomer=" +  idCustomer.toString()  + "&idProduct=" +  idProduct.toString() + "&q=" + quantity.toString() +  "&op=editBasketQuantity", {responseType: 'json'});
 
 }
 
@@ -94,7 +94,7 @@ getBasket(idCustomer: number) {
 
 }
 buy(idCustomer: number) {
-  return this.http.get(this.configUrl +  "idCustomer=" + idCustomer.toString() +  "&op=buy", {responseType: 'json'});
+  return this.http.get(this.configUrl +  "idCustomer=" + idCustomer.toString()  +  "&op=buy", {responseType: 'json'});
 
 }
 

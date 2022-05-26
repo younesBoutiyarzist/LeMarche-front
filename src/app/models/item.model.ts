@@ -1,7 +1,7 @@
 import { Product } from "./product.model";
 
-export class Element {
-    product: Product = new Product();
+export class Item {
+    product: Product | undefined;
     quantity: number | undefined;
 
   

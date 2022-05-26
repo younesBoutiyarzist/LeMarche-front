@@ -1,13 +1,11 @@
-import { Product } from "./product.model";
-
 export class Element {
-    product: Product = new Product();
+    name: string | undefined;
     quantity: number | undefined;
 
   
     constructor(json?: any) {
       if (json) {
-        this.product = json.product;
+        this.name = json.name;
         this.quantity = json.quantity;
       }
     }

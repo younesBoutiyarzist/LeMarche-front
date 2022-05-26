@@ -37,6 +37,10 @@ export class ClientComponent implements OnInit {
         map(value => this._filter(value)),
       );
   })
+  this.api.getBasket(this.api.idUser? this.api.idUser : 0).subscribe((data: any) => {
+    this.basket = data;
+    console.log(this.basket);
+  })
     
   }
 
@@ -70,19 +74,62 @@ export class ClientComponent implements OnInit {
         return product.id == id;
       });
       if (Number.isInteger(quantity)) {
-        this.basket.push({
-          "name" : found?.name,
-          "quantity" : quantity
-        })
+        found? this.api.addToBasket(this.api.idUser? this.api.idUser : 0, found.id? found.id : 0, quantity). subscribe((data : any) => {
+          this.basket.push({
+            "product" : found? found : new Product(),
+            "quantity" : quantity
+          })
+        }): console.log("error");
     }
     });
   }
 
   deleteElement(element: Element) {
-    console.log(this.basket);
-    this.basket = this.basket.filter(function(value, index, arr){ 
-      return value.name != element.name;
+    this.api.removeFromBasket(this.api.idUser? this.api.idUser : 0 , element.product.id? element.product.id : 0  ).subscribe( ( data : any) => {
+      this.basket = this.basket.filter(function(value, index, arr){ 
+      return value.product.name != element.product.name;
+    })
+
   })
-  console.log(this.basket);
+
+ 
+  }
+
+  deleteBasket() {
+      this.api.resetBasket(this.api.idUser? this.api.idUser : 0 ).subscribe((data: any) => {
+        this.api.getBasket(this.api.idUser? this.api.idUser : 0).subscribe((data: any) => {
+          this.basket = data;
+        })
+      })
+  }
+
+  validateBasket() {
+    this.api.buy(this.api.idUser? this.api.idUser : 0 ).subscribe((data: any) => {
+      this.api.getBasket(this.api.idUser? this.api.idUser : 0).subscribe((data: any) => {
+        this.basket = data;
+      })
+    })
+  }
+  modifyQuantity(idProduct: number | undefined, q_acc: number | undefined) {
+    const dialogRef = this.dialog.open(DialogQuantityComponent, {
+      width: '250px',
+      data: {quantity: q_acc},
+      
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      let quantity = result;
+      var found = this.list_product.find(function(product) {
+        return product.id == idProduct;
+      });
+      if (Number.isInteger(quantity)) {
+        found? this.api.editBasketQuantity(this.api.idUser? this.api.idUser : 0, found.id? found.id : 0, quantity). subscribe((data : any) => {
+          this.api.getBasket(this.api.idUser? this.api.idUser : 0).subscribe((data: any) => {
+            this.basket = data;
+          })
+
+        }): console.log("error");
+    }
+    });
   }
 }

@@ -24,15 +24,15 @@
     <div>Action</div>
   </div>
   <mat-divider></mat-divider>
-  <div *ngFor="let product of filteredOptions| async">
+  <div *ngFor="let item of filteredOptions| async">
     <div class="button">
         <div class="button-inside">
-          <div>{{product.name}} </div>
-        <div>{{product.price}}</div>
-        <div>{{product.price}}</div>
+          <div>{{item.product.name}} </div>
+        <div>{{item.product.price}}</div>
+        <div>{{item.quantity}}</div>
         <div>
-            <button class="button-icon" (click)=" openDialog(product.id, product.name, product.price)"><mat-icon>settings</mat-icon></button>
-            <button class="button-icon" (click)=" deleteElement(product.id);"><mat-icon>delete_outline</mat-icon></button>
+            <button class="button-icon" (click)=" openDialog(item.product.id, item.product.name, item.product.price, item.quantity)"><mat-icon>settings</mat-icon></button>
+            <button class="button-icon" (click)=" deleteElement(item.product.id);"><mat-icon>delete_outline</mat-icon></button>
         </div>
     </div>
     </div>  
