@@ -7,6 +7,8 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import { DialogQuantityComponent } from '../dialog-quantity/dialog-quantity.component';
 import { Element } from '../models/element.model';
 import { ApiService } from '../api.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-client',
@@ -18,7 +20,7 @@ export class ClientComponent implements OnInit {
   list_product: Product[] = [];
   basket: Element[] = []; 
 
-  constructor(public dialog: MatDialog, public api : ApiService) { }
+  constructor(public dialog: MatDialog, public api : ApiService, private _snackBar: MatSnackBar) { }
 
   myControl = new FormControl();
   products_name: string[] = [];
@@ -39,7 +41,6 @@ export class ClientComponent implements OnInit {
   })
   this.api.getBasket(this.api.idUser? this.api.idUser : 0).subscribe((data: any) => {
     this.basket = data;
-    console.log(this.basket);
   })
     
   }
@@ -74,6 +75,9 @@ export class ClientComponent implements OnInit {
         return product.id == id;
       });
       if (Number.isInteger(quantity)) {
+        this._snackBar.open( 'Add to basket', '' , {
+          duration: 2000,
+       });
         found? this.api.addToBasket(this.api.idUser? this.api.idUser : 0, found.id? found.id : 0, quantity). subscribe((data : any) => {
           this.basket.push({
             "product" : found? found : new Product(),
@@ -86,6 +90,9 @@ export class ClientComponent implements OnInit {
 
   deleteElement(element: Element) {
     this.api.removeFromBasket(this.api.idUser? this.api.idUser : 0 , element.product.id? element.product.id : 0  ).subscribe( ( data : any) => {
+      this._snackBar.open( 'delete element', '' , {
+        duration: 2000,
+     });
       this.basket = this.basket.filter(function(value, index, arr){ 
       return value.product.name != element.product.name;
     })
@@ -100,14 +107,23 @@ export class ClientComponent implements OnInit {
         this.api.getBasket(this.api.idUser? this.api.idUser : 0).subscribe((data: any) => {
           this.basket = data;
         })
+      }, (error) => {                              //Error callback
+        this._snackBar.open( ' error' , '' , {
+          duration: 2000,
+       });
       })
   }
 
   validateBasket() {
     this.api.buy(this.api.idUser? this.api.idUser : 0 ).subscribe((data: any) => {
-      this.api.getBasket(this.api.idUser? this.api.idUser : 0).subscribe((data: any) => {
-        this.basket = data;
-      })
+      this.deleteBasket();
+      this._snackBar.open( 'you have validate your basket', '' , {
+        duration: 2000,
+     });
+    }, (error) => {                              //Error callback
+      this._snackBar.open( 'not enought money! add credit', '', {
+        duration: 2000,
+     });
     })
   }
   modifyQuantity(idProduct: number | undefined, q_acc: number | undefined) {
@@ -124,6 +140,9 @@ export class ClientComponent implements OnInit {
       });
       if (Number.isInteger(quantity)) {
         found? this.api.editBasketQuantity(this.api.idUser? this.api.idUser : 0, found.id? found.id : 0, quantity). subscribe((data : any) => {
+          this._snackBar.open( 'Basket edit', '' , {
+            duration: 2000,
+         });
           this.api.getBasket(this.api.idUser? this.api.idUser : 0).subscribe((data: any) => {
             this.basket = data;
           })

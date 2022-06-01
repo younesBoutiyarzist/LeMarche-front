@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import { Product } from '../models/product.model';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { DialogQuantityComponent } from '../dialog-quantity/dialog-quantity.component';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import { DialogAddProductComponent } from '../dialog-add-product/dialog-add-product.component';
 import { ApiService } from '../api.service';
 import { Item } from '../models/item.model';
@@ -19,7 +19,7 @@ export class VendeurComponent implements OnInit {
   list_product: Item[] = [];
   
 
-  constructor(public dialog: MatDialog, public api: ApiService) { }
+  constructor(public dialog: MatDialog, public api: ApiService, public snackBar: MatSnackBar) { }
 
   myControl = new FormControl();
   products_name: string[] = [];
@@ -87,8 +87,18 @@ export class VendeurComponent implements OnInit {
   deleteElement(id: number) {
     
     this.api.removeProduct(id).subscribe(() => {
-      this.list_product = this.list_product.filter(e => e.product? e.product.id != id : true); 
-      this.update();
+      this.api.getStock(this.api.idUser? this.api.idUser : 0).subscribe( (data :any) =>
+      {
+        this.list_product = data;
+        this.update();
+        this.snackBar.open('element deleted', '',  {
+          duration: 2000,
+       });
+      },(error) => {
+        this.snackBar.open('not delete element', '', {
+          duration: 2000,
+       });
+      });
 
     });
   }
@@ -101,12 +111,11 @@ export class VendeurComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       //TO CHANGE
-      console.log(this.api.idUser);
       this.api.getStock(this.api.idUser? this.api.idUser : 0).subscribe( (data :any) =>
       {
         this.list_product = data;
         this.update();
-      })
     });
-  }
+  });
+}
 }

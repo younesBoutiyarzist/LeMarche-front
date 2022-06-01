@@ -14,6 +14,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSelectModule} from '@angular/material/select';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 import { AppComponent } from './app.component';
@@ -57,7 +58,8 @@ import { DialogAddProductComponent } from './dialog-add-product/dialog-add-produ
     HttpClientModule,
     MatAutocompleteModule,
     MatDialogModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSnackBarModule
 
   ],
   providers: [],

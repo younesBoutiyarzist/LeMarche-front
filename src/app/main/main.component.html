@@ -1,15 +1,16 @@
-<app-header (OpenEvent)="drawer.toggle()"></app-header>
+
+<app-header (OpenEvent)="drawer.toggle(); update();"></app-header>
 <mat-drawer-container class="container" [hasBackdrop]="hasBackdrop">
     <mat-drawer #drawer>
             <div class="conc-button">
               <button mat-button class="button" (click)="affichage(0);drawer.close()"> Login/Settings </button>
             </div>
             <mat-divider></mat-divider>
-            <div  class="conc-button">
+            <div   *ngIf="typeUser === 'Customer'" class="conc-button">
               <button mat-button class="button" (click)="affichage(1);drawer.close()"> Customer </button>
             </div>
           <mat-divider></mat-divider>
-          <div  class="conc-button">
+          <div  *ngIf="typeUser === 'Seller'" class="conc-button">
             <button mat-button class="button"  (click)="affichage(2);drawer.close()"> Seller </button>
           </div>
       <mat-divider></mat-divider>

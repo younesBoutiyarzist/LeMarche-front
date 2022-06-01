@@ -3,6 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Output, EventEmitter } from '@angular/core';
 import { ApiService } from '../api.service';
 import { Personne } from '../models/personne.model';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -20,12 +22,16 @@ export class LoginComponent implements OnInit {
     Password: new FormControl('', Validators.minLength(8))
   });
 
+  MoneyForm = new FormGroup({
+    Money: new FormControl(''),
+  });
+
   username = this.loginForm.get("Username");
   mdp = this.loginForm.get("Password");
   personne : Personne | undefined;
   hide = true;
 
-  constructor(public api: ApiService) { }
+  constructor(public api: ApiService, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
   }
@@ -71,26 +77,44 @@ export class LoginComponent implements OnInit {
 
    }
   }
+
+  addMoney() {
+    this.api.addMoney(this.api.idUser? this.api.idUser : 0, this.MoneyForm.value.Money).subscribe((data: any) => {
+
+    });
+  }
+  
   Submit(){
     if (!this.loginForm.invalid) {
       if (this.loginForm.value.Type == "Customer") {
-        this.api.loginCustomer(this.loginForm.value.Username, this.loginForm.value.Password).subscribe((data:any) => {
+        this.api.loginCustomer(this.loginForm.value.Username, this.loginForm.value.Password).subscribe( 
+          (data:any) => {
           this.personne = data;
           this.api.idUser =  this.personne?.id;
           this.api.typeUser = "Customer";
           this.ValidateEvent.emit(true);
-      }
-
-        );
+          this._snackBar.open( 'connected' ,'' , {
+            duration: 2000,
+         });
+      }, (error) => {                              //Error callback
+        this._snackBar.open( 'error password', '',{
+          duration: 2000,
+       } );
+      });
       } else {
         this.api.loginSeller(this.loginForm.value.Username, this.loginForm.value.Password).subscribe((data:any) => {
           this.personne = data;
           this.api.idUser =  this.personne?.id;
           this.api.typeUser = "Seller";
           this.ValidateEvent.emit(true);
-
-          //TO DO
-      })
+          this._snackBar.open( 'connected', ' ', {
+            duration: 2000,
+         });
+      }, (error) => {                              //Error callback
+        this._snackBar.open( 'error password', ' ', {
+          duration: 2000,
+       } );
+      });
 
       }
     } 

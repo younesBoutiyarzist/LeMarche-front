@@ -20,6 +20,10 @@ loginCustomer(name: string, password : string) {
   return this.http.get(this.configUrl + "name=" + name + "&pw=" + password.toString() +  "&op=loginB", {responseType: 'json'} );
 }  
 
+addMoney(idCustomer: number, money : string) {
+  return this.http.get(this.configUrl +  "idCustomer=" + idCustomer.toString() +  "&money=" + money +  "&op=addMoney", {responseType: 'json'});
+}
+
 
 loginSeller(name: string, password : string) {
   return this.http.get(this.configUrl + "name=" + name + "&pw=" + password.toString() + "&op=loginS", {responseType: 'json'} );
@@ -35,11 +39,11 @@ addCustomer(name: string, cash : number, password : string) {
    "&cash="+ cash.toString() + "&pw=" + password.toString() + "&op=addBuyer" );
 }
 removeSeller(id: number) {
-  return this.http.get(this.configUrl + "id=" + id.toString() + "&op=removeSeller" );
+  return this.http.get(this.configUrl + "idSeller=" + id.toString() + "&op=removeSeller" );
 }
 
 removeCustomer(id: number) {
-  return this.http.get(this.configUrl + "id=" + id.toString() + "&op=removeCustomer" );
+  return this.http.get(this.configUrl + "idCustomer=" + id.toString() + "&op=removeBuyer" );
 }
 
 addProduct(idSeller: number, name: string, price: number, quantity: number) {
@@ -106,6 +110,5 @@ salesHistory(idCustomer: number) {
 purchasesHistory(idCustomer: number) {
   return this.http.get(this.configUrl +  "id=" + idCustomer.toString() +  "&op=purchasesHistory", {responseType: 'json'});
 }
-
 
 }

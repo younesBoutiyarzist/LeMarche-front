@@ -12,18 +12,22 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 export class DialogAddProductComponent implements OnInit {
 
   addForm = new FormGroup({
-    Name : new FormControl(this.data?.name? this.data.name : '' ),
-    Price : new FormControl(this.data?.price? this.data.price : ''),
-    Quantity: new FormControl(this.data?.quantity? this.data.quantity : '')
+    Name : new FormControl(this.data? this.data.name : '' ),
+    Price : new FormControl(this.data? this.data.price : ''),
+    Quantity: new FormControl(this.data? this.data.quantity : '')
   });
 
-  quantity = this.data.quantity;
-  price = this.data.price;
+  quantity: any;
+  price: any;
 
   constructor( public dialogRef: MatDialogRef<DialogAddProductComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,public api: ApiService) { }
 
   ngOnInit(): void {
+    if( this.data != undefined) {
+      this.price = this.data.price;
+      this.quantity = this.data.quantity;
+    }
     
   }
 
@@ -31,9 +35,7 @@ export class DialogAddProductComponent implements OnInit {
     if (this.addForm.invalid) {
       return;
     } else {
-      if ( this.data.name != undefined) {
-        console.log(this.data.quantity);
-        console.log( this.addForm.value.Quantity);
+      if ( this.data != undefined) {
         if (this.data.quantity != this.addForm.value.Quantity) {
           this.api.updateStock(this.api.idUser? this.api.idUser : 0, this.data.id,  this.addForm.value.Quantity).subscribe((data: any) => {
 

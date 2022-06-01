@@ -8,7 +8,7 @@ import { Product } from '..//models/product.model';
 })
 export class MainComponent implements OnInit {
   hasBackdrop = true;
-  typeUser = this.api.typeUser;
+  typeUser = '';
   section = 0;
   data :Product[] = [];
   constructor(public api: ApiService) { }
@@ -17,7 +17,6 @@ export class MainComponent implements OnInit {
   }
 
   changePage() {
-    console.log(this.api.typeUser);
     if(this.api.typeUser == 'Customer') {
       this.affichage(1);
     } else {
@@ -28,5 +27,7 @@ export class MainComponent implements OnInit {
     this.section = i;
   }
 
-  
+  update() {
+    this.typeUser = this.api.typeUser?  this.api.typeUser : '';
+  }
 }
